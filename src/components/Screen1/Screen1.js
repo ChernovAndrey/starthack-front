@@ -316,10 +316,12 @@ class Screen1 extends Component {
                </div>
                
                <div className="buy-button">
+                  <a href="https://www.six-group.com/en/products-services/financial-information/display-and-delivery-capabilities/sixid.html">
                   <Button 
                   disabled={this.state.checkedBondId === -1}
                   variant="contained" 
                   fullWidth="true">Buy bond</Button>
+                  </a>
                </div>
             </div>
             
