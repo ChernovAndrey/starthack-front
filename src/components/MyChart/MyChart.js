@@ -32,7 +32,7 @@ const MyChart = ({ chartData }) => {
       <Legend layout="vertical" align="left" verticalAlign="middle"/>
       <Line type="monotone" name="bond 1" connectNulls={true} dataKey="bond1return" stroke="#4287f5" activeDot={{ r: 8 }} />
       <Line type="monotone" name="bond 2" connectNulls={true} dataKey="bond2return" stroke="#f54278" activeDot={{ r: 8 }} />
-      <Line type="monotone" name="bond 3" connectNulls={true} dataKey="bond3return" stroke="#e0f542" activeDot={{ r: 8 }} />
+      <Line type="monotone" name="bond 3" connectNulls={true} dataKey="bond3return" stroke="#02c97d" activeDot={{ r: 8 }} />
     </LineChart>
   );
 };
