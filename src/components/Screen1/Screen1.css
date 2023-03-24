@@ -18,6 +18,14 @@
     width: 100%;
 }
 
+.visible {
+    visibility: visible;
+  }
+  
+.invisible {
+    visibility: hidden;
+}
+
 .amount-field {
     width: 50%;
 }
@@ -73,6 +81,8 @@
     /* background-color: darkslategray; */
     position: relative;
     align-self: center;
+    /* margin-right: 10%; */
+    /* padding-right: 10%; */
 }
 
 .chart-container {
@@ -88,7 +98,7 @@
     padding-top: 2%;
 }
 
-.MuiPaper-root {
+/* .MuiPaper-root {
     color: #000;
     background-color: #000;
 }
@@ -101,4 +111,4 @@
 .css-11xur9t-MuiPaper-root-MuiTableContainer-root {
     color: #000;
     background-color: #000;
-}
+} */
