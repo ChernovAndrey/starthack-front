@@ -15,8 +15,8 @@ const MyGraph = ({ data }) => {
 
   return (
     <LineChart width={800} height={400} data={chartData}>
-      <XAxis dataKey="year" />
-      <YAxis />
+      <XAxis title="year" />
+      <YAxis dataKey="profit"/>
       <CartesianGrid strokeDasharray="3 3" />
       <Tooltip />
       <Legend />
