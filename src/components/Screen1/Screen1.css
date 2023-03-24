@@ -6,8 +6,16 @@
   bottom: 0;
   flex-direction: column;
   display: flex;
-  /* background-color: chartreuse; */
+  background-color: #505050;
   justify-content: center;
+  color: white;
+}
+.TableCell {
+   color: white;
+}
+
+.row {
+  color: #10CF9B;
 }
 
 .inputs {
@@ -16,6 +24,7 @@
     display: flex;
     align-self: center;
     width: 100%;
+    color: white;
 }
 
 .visible {
@@ -28,6 +37,7 @@
 
 .amount-field {
     width: 50%;
+    color: white;
 }
 
 .submit-button {

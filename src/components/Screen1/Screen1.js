@@ -221,7 +221,7 @@ class Screen1 extends Component {
             <form className="form-style">
 	       <div className="row"><h1>Two clicks to passive income</h1></div>
                <div className="inputs">
-                  <FormControl sx={{ m: 1, width: '50%' }}>
+                  <FormControl sx={{ m: 1, width: '50%', input: {color: 'white'}  }}>
                      {/* <InputLabel htmlFor="outlined-adornment-amount">Amount</InputLabel> */}
                      <TextField
                         id="outlined-adornment-amount"
@@ -237,7 +237,7 @@ class Screen1 extends Component {
                          }}
                      />
                   </FormControl>
-                  <FormControl fullWidth sx={{ m: 1, width: '50%' }}>
+                  <FormControl fullWidth sx={{ m: 1, width: '50%', input: {color: 'white'} }}>
                      <LocalizationProvider dateAdapter={AdapterDayjs}>
                         <DatePicker 
                         disablePast
@@ -270,16 +270,15 @@ class Screen1 extends Component {
                      </div>
                </div>
                <div className="bond-table">
-                  <TableContainer sx={{color: '#26a671'}}>
-                     <Table size="small" aria-label="simple table">
+                  <TableContainer style={{color: 'white',}}>
+                     <Table size="small" aria-label="simple table" style={{color: 'white'}}>
                      <TableHead>
-                        <TableRow>
-                           <TableCell padding="checkbox"></TableCell>
-                           <TableCell>Bond Name</TableCell>
-                           <TableCell align="right">Coupon Rate</TableCell>
-                           <TableCell align="right">Price</TableCell>
-                           <TableCell align="right">Maturity Date</TableCell>
-                           <TableCell align="right">Total Profit</TableCell>
+                        <TableRow sx={{color: 'white'}}>
+                           <TableCell padding="checkbox" color="white" style={{color: 'white'}}></TableCell>
+                           <TableCell style={{color: 'white'}}>Bond Name</TableCell>
+                           <TableCell align="right"  style={{color: 'white'}}>Coupon Rate</TableCell>
+                           <TableCell align="right" style={{color: 'white'}}>Price</TableCell>
+                           <TableCell align="right" style={{color: 'white'}}>Maturity Date</TableCell>
                         </TableRow>
                      </TableHead>
                      <TableBody>
@@ -288,7 +287,7 @@ class Screen1 extends Component {
                            key={row.id}
                            sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                            >
-                              <TableCell padding="checkbox">
+                              <TableCell padding="checkbox" style={{color: 'white'}}>
                                  <Checkbox
                                  color="primary"
                                  // onClick={this.onCheckboxClick(row.id)}
@@ -299,13 +298,12 @@ class Screen1 extends Component {
                                  onChange={() => this.onCheckboxClick(row.id)}
                                  />
                               </TableCell>
-                              <TableCell component="th" scope="row">
+                              <TableCell component="th" scope="row" style={{color: 'white'}}>
                                  {row.name}
                               </TableCell>
-                              <TableCell align="right">{row.yealdCurve}</TableCell>
-                              <TableCell align="right">{row.price}</TableCell>
-                              <TableCell align="right">{row.final_maturity_date}</TableCell>
-                              <TableCell align="right">{row.total_profit}</TableCell>
+                              <TableCell align="right" style={{color: 'white'}}>{row.yealdCurve}</TableCell>
+                              <TableCell align="right" style={{color: 'white'}}>{row.price}</TableCell>
+                              <TableCell align="right" style={{color: 'white'}}>{row.final_maturity_date}</TableCell>
                            </TableRow>
                         ))}
                      </TableBody>
