@@ -215,6 +215,7 @@ class Screen1 extends Component {
       return (
          <div className="main">
             <form className="form-style">
+	       <div className="row"><h1>Two clicks to passive income</h1></div>
                <div className="inputs">
                   <FormControl sx={{ m: 1, width: '50%' }}>
                      {/* <InputLabel htmlFor="outlined-adornment-amount">Amount</InputLabel> */}
@@ -254,6 +255,7 @@ class Screen1 extends Component {
             <div className={`results ${
                this.state.buttonPressed ? 'visible' : 'invisible'
             }`}>
+               <div className="row"><h1>Payoff plots</h1></div>
                <div className="chart-container">
                      <div className="chart">
                         <MyChart chartData={this.state.payments} />

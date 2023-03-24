@@ -25,8 +25,8 @@ const MyChart = ({ chartData }) => {
 
   return (
     <LineChart width={700} height={250} data={chartData}>
-      <XAxis dataKey="date" label="time"/>
-      <YAxis label="payoff"/>
+      <XAxis dataKey="date" />
+      <YAxis title="profit"/>
       {/* <CartesianGrid strokeDasharray="3 3" /> */}
       <Tooltip />
       <Legend layout="vertical" align="left" verticalAlign="middle"/>
