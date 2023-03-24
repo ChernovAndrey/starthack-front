@@ -88,7 +88,7 @@ class Screen1 extends Component {
      super(props);
      this.state = {
       date: "",
-      amount: "",
+      amount: 100,
       bondData: {},
       checkedBondId: -1,
       bonds: [],
@@ -155,14 +155,8 @@ class Screen1 extends Component {
          const dateToPaymentsMap = new Map();
          result.forEach((bond, index) => {
             // console.log(index);
-           res.push({
-            id: index,
-            name: bond.name,
-            yealdCurve: bond.coupon_rate,
-            price: bond.current_price,
-            final_maturity_date: bond.final_maturity_date,
-            payments: bond.payments
-           })
+           
+           let total_profit = 0;
            bond.payments.forEach((payment, index_p) => {
             if (!dateToPaymentsMap.has(payment.date)) {
                dateToPaymentsMap.set(payment.date, {
@@ -180,7 +174,17 @@ class Screen1 extends Component {
                rt = payment.return - bond.current_price;
                // console.log(rt);
             }
-            dateToPaymentsMap.get(payment.date)["bond"+i+"return"] = rt
+            total_profit += rt;
+            dateToPaymentsMap.get(payment.date)["bond"+i+"return"] = rt.toFixed(2)
+           })
+           res.push({
+            id: index,
+            name: bond.name,
+            yealdCurve: bond.coupon_rate,
+            price: bond.current_price,
+            final_maturity_date: bond.final_maturity_date,
+            total_profit: total_profit.toFixed(2),
+            payments: bond.payments
            })
          });
          // dateToPaymentsMap.set(this.state.date, {
@@ -221,8 +225,11 @@ class Screen1 extends Component {
                      {/* <InputLabel htmlFor="outlined-adornment-amount">Amount</InputLabel> */}
                      <TextField
                         id="outlined-adornment-amount"
+                        error={this.state.amount < 100}
+                        helperText={this.state.amount < 100 ? "Amount can't be less than 100$": ""}
                         startAdornment={<InputAdornment position="start">$</InputAdornment>}
-                        label="Amount"
+                        label="Amount to invest"
+                        // defaultValue={100}
                         value={this.state.amount}
                         onChange={this.handleChangeAmount}
                         InputProps={{
@@ -240,6 +247,7 @@ class Screen1 extends Component {
                         onChange={(newValue) => {
                            this.handleChangeDate(newValue);
                         }}
+                        label="Investment end date"
                         />
                      </LocalizationProvider>
                   </FormControl>
@@ -262,7 +270,7 @@ class Screen1 extends Component {
                      </div>
                </div>
                <div className="bond-table">
-                  <TableContainer style={{color: 'white',}}>
+                  <TableContainer sx={{color: '#26a671'}}>
                      <Table size="small" aria-label="simple table">
                      <TableHead>
                         <TableRow>
@@ -271,6 +279,7 @@ class Screen1 extends Component {
                            <TableCell align="right">Coupon Rate</TableCell>
                            <TableCell align="right">Price</TableCell>
                            <TableCell align="right">Maturity Date</TableCell>
+                           <TableCell align="right">Total Profit</TableCell>
                         </TableRow>
                      </TableHead>
                      <TableBody>
@@ -296,6 +305,7 @@ class Screen1 extends Component {
                               <TableCell align="right">{row.yealdCurve}</TableCell>
                               <TableCell align="right">{row.price}</TableCell>
                               <TableCell align="right">{row.final_maturity_date}</TableCell>
+                              <TableCell align="right">{row.total_profit}</TableCell>
                            </TableRow>
                         ))}
                      </TableBody>
