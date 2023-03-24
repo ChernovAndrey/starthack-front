@@ -263,7 +263,7 @@ class Screen1 extends Component {
             <div className={`results ${
                this.state.buttonPressed ? 'visible' : 'invisible'
             }`}>
-               <div className="row"><h1>Payoff plots</h1></div>
+               <div className="row"><h1>Profit plots</h1></div>
                <div className="chart-container">
                      <div className="chart">
                         <MyChart chartData={this.state.payments} />
@@ -279,6 +279,7 @@ class Screen1 extends Component {
                            <TableCell align="right"  style={{color: 'white'}}>Coupon Rate</TableCell>
                            <TableCell align="right" style={{color: 'white'}}>Price</TableCell>
                            <TableCell align="right" style={{color: 'white'}}>Maturity Date</TableCell>
+                           <TableCell align="right" style={{color: 'white'}}>Total Profit</TableCell>
                         </TableRow>
                      </TableHead>
                      <TableBody>
@@ -304,6 +305,7 @@ class Screen1 extends Component {
                               <TableCell align="right" style={{color: 'white'}}>{row.yealdCurve}</TableCell>
                               <TableCell align="right" style={{color: 'white'}}>{row.price}</TableCell>
                               <TableCell align="right" style={{color: 'white'}}>{row.final_maturity_date}</TableCell>
+                              <TableCell align="right" style={{color: 'white'}}>{row.total_profit}</TableCell>
                            </TableRow>
                         ))}
                      </TableBody>
