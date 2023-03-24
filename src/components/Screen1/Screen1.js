@@ -25,6 +25,7 @@ import Paper from '@mui/material/Paper';
 import { DataGrid } from '@mui/x-data-grid';
 import Checkbox from '@mui/material/Checkbox';
 import dayjs from 'dayjs';
+import { NumericFormat } from 'react-number-format';
 
 import './Screen1.css'
 
@@ -34,6 +35,31 @@ const data = [
    { year: 2022, equity: 150 },
    { year: 2023, equity: 180 },
  ];
+
+ const NumericFormatCustom = React.forwardRef(function NumericFormatCustom(
+   props,
+   ref,
+ ) {
+   const { onChange, ...other } = props;
+ 
+   return (
+     <NumericFormat
+       {...other}
+       getInputRef={ref}
+       onValueChange={(values) => {
+         onChange({
+           target: {
+             name: props.name,
+             value: values.value,
+           },
+         });
+       }}
+       thousandSeparator
+       valueIsNumericString
+       prefix="$"
+     />
+   );
+ });
 
 const currencyFormatter = new Intl.NumberFormat('en-US', {
    style: 'currency',
@@ -45,17 +71,17 @@ const usdPrice = {
    valueFormatter: ({ value }) => currencyFormatter.format(Number(value)),
 };
 
-const rows = [
-   {id: 1, name: "aaa", yealdCurve: 55, price: 100},
-   {id: 2, name: "bbb", yealdCurve: 55, price: 100},
-   {id: 3, name: "ccc", yealdCurve: 55, price: 100},
-]
+// const rows = [
+//    {id: 1, name: "aaa", yealdCurve: 55, price: 100},
+//    {id: 2, name: "bbb", yealdCurve: 55, price: 100},
+//    {id: 3, name: "ccc", yealdCurve: 55, price: 100},
+// ]
 
-const columns = [
-   { field: 'name', headerName: 'Name', width: 120 },
-   { field: 'yealdCurve', headerName: 'yealdCurve', width: 120, ...usdPrice },
-   { field: 'price', headerName: 'price', width: 120, ...usdPrice },
-]
+// const columns = [
+//    { field: 'name', headerName: 'Name', width: 120 },
+//    { field: 'coupon_rate', headerName: 'Coupon Rate', width: 120, ...usdPrice },
+//    { field: 'price', headerName: 'price', width: 120, ...usdPrice },
+// ]
 
 class Screen1 extends Component {
    constructor(props) {
@@ -66,7 +92,8 @@ class Screen1 extends Component {
       bondData: {},
       checkedBondId: -1,
       bonds: [],
-      payments: []
+      payments: [],
+      buttonPressed: false
      }
      this.handleChangeAmount = this.handleChangeAmount.bind(this);
      this.handleChangeDate = this.handleChangeDate.bind(this);
@@ -127,15 +154,16 @@ class Screen1 extends Component {
          const res = []
          const dateToPaymentsMap = new Map();
          result.forEach((bond, index) => {
-            console.log(index);
+            // console.log(index);
            res.push({
             id: index,
             name: bond.name,
             yealdCurve: bond.coupon_rate,
             price: bond.current_price,
+            final_maturity_date: bond.final_maturity_date,
             payments: bond.payments
            })
-           bond.payments.forEach((payment) => {
+           bond.payments.forEach((payment, index_p) => {
             if (!dateToPaymentsMap.has(payment.date)) {
                dateToPaymentsMap.set(payment.date, {
                   bond1return: null,
@@ -144,10 +172,15 @@ class Screen1 extends Component {
                })
             }
             const i = index + 1
-            if (payment.return > bond.current_price) {
-               payment.return = payment.return - bond.current_price
+            console.log(bond.payments.length);
+            let rt = payment.return
+            if (index_p === bond.payments.length - 1) {
+               // console.log("here");
+               // console.log(bond.current_price);
+               rt = payment.return - bond.current_price;
+               // console.log(rt);
             }
-            dateToPaymentsMap.get(payment.date)["bond"+i+"return"] = payment.return
+            dateToPaymentsMap.get(payment.date)["bond"+i+"return"] = rt
            })
          });
          // dateToPaymentsMap.set(this.state.date, {
@@ -155,7 +188,7 @@ class Screen1 extends Component {
          //    bond2return: 0,
          //    bond3return: 0,
          // })
-         console.log(dateToPaymentsMap);
+         // console.log(dateToPaymentsMap);
          const payments = [];
          dateToPaymentsMap.forEach((value, key) => {
             payments.push({
@@ -174,7 +207,7 @@ class Screen1 extends Component {
          payments.sort((a,b) => a.date - b.date);
          payments.map((v) => {v.date = v.date.toLocaleDateString()})
          console.log(payments);
-         this.setState({bonds: res, payments: payments});
+         this.setState({bonds: res, payments: payments, buttonPressed: true});
       })
    }
 
@@ -184,19 +217,22 @@ class Screen1 extends Component {
             <form className="form-style">
                <div className="inputs">
                   <FormControl sx={{ m: 1, width: '50%' }}>
-                     <InputLabel htmlFor="outlined-adornment-amount">Amount</InputLabel>
-                     <OutlinedInput
+                     {/* <InputLabel htmlFor="outlined-adornment-amount">Amount</InputLabel> */}
+                     <TextField
                         id="outlined-adornment-amount"
                         startAdornment={<InputAdornment position="start">$</InputAdornment>}
                         label="Amount"
                         value={this.state.amount}
                         onChange={this.handleChangeAmount}
+                        InputProps={{
+                           inputComponent: NumericFormatCustom,
+                         }}
                      />
                   </FormControl>
                   <FormControl fullWidth sx={{ m: 1, width: '50%' }}>
                      <LocalizationProvider dateAdapter={AdapterDayjs}>
                         <DatePicker 
-                        // disablePast
+                        disablePast
                         // format="YYYY-MM-DD"
                         value={this.state.date}
                         // onChange={this.handleChangeDate}
@@ -209,27 +245,30 @@ class Screen1 extends Component {
                </div>
                <div className="submit-button">
                   <Button 
-                  disabled = {!this.state.amount || !this.state.date}
+                  disabled = {!this.state.amount || !this.state.date || this.state.amount < 100}
                   variant="contained" 
                   onClick={() => this.sendGetRequest()}
                   fullWidth="true">Get Bonds</Button>
                </div>
             </form>
-            <div className="results">
+            <div className={`results ${
+               this.state.buttonPressed ? 'visible' : 'invisible'
+            }`}>
                <div className="chart-container">
                      <div className="chart">
                         <MyChart chartData={this.state.payments} />
                      </div>
                </div>
                <div className="bond-table">
-                  <TableContainer component={Paper} style={{backgroundColor:'red', color: 'white',}}>
+                  <TableContainer style={{color: 'white',}}>
                      <Table size="small" aria-label="simple table">
                      <TableHead>
                         <TableRow>
                            <TableCell padding="checkbox"></TableCell>
                            <TableCell>Bond Name</TableCell>
-                           <TableCell align="right">yealdCurve</TableCell>
+                           <TableCell align="right">Coupon Rate</TableCell>
                            <TableCell align="right">Price</TableCell>
+                           <TableCell align="right">Maturity Date</TableCell>
                         </TableRow>
                      </TableHead>
                      <TableBody>
@@ -254,6 +293,7 @@ class Screen1 extends Component {
                               </TableCell>
                               <TableCell align="right">{row.yealdCurve}</TableCell>
                               <TableCell align="right">{row.price}</TableCell>
+                              <TableCell align="right">{row.final_maturity_date}</TableCell>
                            </TableRow>
                         ))}
                      </TableBody>
@@ -266,7 +306,10 @@ class Screen1 extends Component {
                </div>
                
                <div className="buy-button">
-                  <Button variant="contained" fullWidth="true">Contained</Button>
+                  <Button 
+                  disabled={this.state.checkedBondId === -1}
+                  variant="contained" 
+                  fullWidth="true">Buy bond</Button>
                </div>
             </div>
             
