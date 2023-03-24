@@ -1,0 +1,104 @@
+.main {
+    position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  flex-direction: column;
+  display: flex;
+  /* background-color: chartreuse; */
+  justify-content: center;
+}
+
+.inputs {
+    position: relative;
+    /* background-color: red; */
+    display: flex;
+    align-self: center;
+    width: 100%;
+}
+
+.amount-field {
+    width: 50%;
+}
+
+.submit-button {
+    width: 100%;
+    /* background-color: salmon; */
+}
+
+.form-style {
+    /* background-color: blueviolet; */
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    width: 50%;
+}
+
+.results {
+    /* background-color: aquamarine; */
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    width: 50%;
+    padding-top: 2%;
+}
+
+.radio-graph {
+    /* background-color: chocolate; */
+    display: flex;
+    flex-direction: row;
+}
+
+.radio-buttons {
+    /* background-color: darkseagreen; */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.bond-table {
+    width: 100%;
+    display: flex;
+    align-self: center;
+    padding-top: 2%;
+}
+
+.chart {
+    /* height: 200; */
+    display: flex;
+    /* justify-content: center; */
+    /* background-color: darkslategray; */
+    position: relative;
+    align-self: center;
+}
+
+.chart-container {
+    display: flex;
+    flex-direction: row;
+    /* background-color: cornflowerblue; */
+    position: relative;
+    padding-left: 7%;
+    /* justify-content: center; */
+}
+
+.buy-button {
+    padding-top: 2%;
+}
+
+.MuiPaper-root {
+    color: #000;
+    background-color: #000;
+}
+
+.MuiTableContainer-root {
+    color: #000;
+    background-color: #000;
+}
+
+.css-11xur9t-MuiPaper-root-MuiTableContainer-root {
+    color: #000;
+    background-color: #000;
+}
